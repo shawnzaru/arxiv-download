@@ -12,12 +12,6 @@ We then initiate the download task (consider sending multiple sync request to s3
 
 ## installation
 
-### configure an awscli profile
-```
-aws configure --profile YOUR_PROFILE_NAME
-```
-and enter your aws credentials.
-
 ### create a new conda environment for our process flow
 ```python
 # choose python=3.6 for later using Tensorflow
@@ -32,3 +26,9 @@ conda install numpy scipy pandas matplotlib jupyter
 # awscli is the command-line utlity 'aws', boto3 is the programming interface
 pip install awscli boto3
 ```
+
+### configure an awscli profile
+```
+aws configure --profile YOUR_PROFILE_NAME
+```
+and enter your aws credentials.
