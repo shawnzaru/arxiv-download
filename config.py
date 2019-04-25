@@ -8,3 +8,7 @@ class ArXivConfig(object):
   PDF_DIR = DOWNLOAD_DIR + '/pdf'
   META_DATA_DIR	= DATA_DIR + '/meta-data'
   MAIN_FILE_DIR = DATA_DIR + '/main-files'
+
+  AWS_ACCESS_KEY_ID = ''
+  AWS_SECRET_ACCESS_KEY = ''
+  PROFILE_NAME = ''
