@@ -15,6 +15,7 @@ We then initiate the download task (consider sending multiple sync request to s3
 ### create a new conda environment for our process flow
 ```python
 # choose python=3.6 for later using Tensorflow
+# don't forget the 'pip' here or else all the pip packages will be installed to the base environment
 conda create -n arxiv pip python=3.6
 ```
 ### install requisite python packages
