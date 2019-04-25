@@ -17,8 +17,11 @@ We then initiate the download task (consider sending multiple sync request to s3
 # choose python=3.6 for later using Tensorflow
 conda create -n arxiv pip python=3.6
 ```
-
+### install requisite python packages
 ```python
 # temporary
-conda install awscli
+conda install numpy scipy pandas matplotlib jupyter
+
+# awscli is the command-line utlity 'aws', boto3 is the programming interface
+pip install awscli boto3
 ```
