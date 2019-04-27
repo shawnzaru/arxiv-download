@@ -12,15 +12,15 @@ class DownloadManager(object):
     self.session = boto3.session.Session(
         aws_access_key_id=self.config.AWS_ACCESS_KEY_ID,
         aws_secret_access_key=self.config.AWS_SECRET_ACCESS_KEY,
-        profile_name = self.config.PROFILE_NAME)
+        profile_name=self.config.PROFILE_NAME)
     self.client = self.session.client('s3')
 
   def _list_objects(self, prefix):
     paginator = self.client.get_paginator('list_objects_v2')
     page_iterator = paginator.paginate(
-        Bucket = self.config.BUCKET,
-        Prefix = prefix,
-        RequestPayer = 'requester')
+        Bucket=self.config.BUCKET,
+        Prefix=prefix,
+        RequestPayer='requester')
     for page in page_iterator:
       for content in page['Contents']:
         print(content['Key'])
