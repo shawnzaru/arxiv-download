@@ -1,6 +1,7 @@
 import os
 
 class ArXivConfig(object):
+
   PROFILE_NAME = 'shawn'  # enter your profile name here is sufficient
   AWS_ACCESS_KEY_ID = None
   AWS_SECRET_ACCESS_KEY = None
@@ -36,6 +37,10 @@ class ArXivConfig(object):
   CMD_LS_PDF = CMD_PREFIX_LS + ' ' + CMD_BUCKET_PDF
   CMD_DOWNLOAD_SRC_MANIFEST = CMD_PREFIX_CP + ' ' + CMD_BUCKET_SRC + SRC_MANIFEST_FILE + ' ' + SRC_DIR
   CMD_DOWNLOAD_PDF_MANIFEST = CMD_PREFIX_CP + ' ' + CMD_BUCKET_PDF + PDF_MANIFEST_FILE + ' ' + PDF_DIR
+  CMD_DOWNLOAD_SRC_OBJECT = CMD_PREFIX_CP + ' ' + CMD_BUCKET_SRC + '%s' + ' ' + SRC_DIR
+  CMD_DOWNLOAD_PDF_OBJECT = CMD_PREFIX_CP + ' ' + CMD_BUCKET_PDF + '%s' + ' ' + PDF_DIR
+
+
 
 if __name__ == '__main__':
   cfg = ArXivConfig
@@ -70,3 +75,7 @@ if __name__ == '__main__':
   print("CMD_LS_PDF:", cfg.CMD_LS_PDF)
   print("CMD_DOWNLOAD_SRC_MANIFEST:", cfg.CMD_DOWNLOAD_SRC_MANIFEST)
   print("CMD_DOWNLOAD_PDF_MANIFEST:", cfg.CMD_DOWNLOAD_PDF_MANIFEST)
+  print("CMD_DOWNLOAD_SRC_OBJECT:", cfg.CMD_DOWNLOAD_SRC_OBJECT)
+  print("CMD_DOWNLOAD_PDF_OBJECT:", cfg.CMD_DOWNLOAD_PDF_OBJECT)
+  print(cfg.CMD_DOWNLOAD_SRC_OBJECT % 'arXiv_src_0001_001.tar')
+  print(cfg.CMD_DOWNLOAD_PDF_OBJECT % 'arXiv_pdf_0001_001.tar')
