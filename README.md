@@ -33,3 +33,18 @@ pip install awscli boto3
 aws configure --profile YOUR_PROFILE_NAME
 ```
 and enter your aws credentials.
+
+### Data Structure
+ arxiv_download
+  - data (where the downloaded data goes, symlink this to a larger hard disk if necessary)
+     - raw_data (two thousand tars with manifest)
+     - meta_data (in sqlite db file)
+     - (association of paper to big tar file, I think this is needed information)
+ - (list of main files)
+     - (extracted sentences, in text files or in DB files)
+     - (more structures, e.g. syntax trees, etc)
+  - scripts (where we put our scripts)
+  - visualization (where we put charts or notebook scripts)
+  - (there can be one or several master scripts at the top to control
+ the whole data processing pipeline)
+  - (formalities)
