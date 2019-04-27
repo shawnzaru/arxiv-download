@@ -11,4 +11,10 @@ class ArXivConfig(object):
 
   AWS_ACCESS_KEY_ID = ''
   AWS_SECRET_ACCESS_KEY = ''
-  PROFILE_NAME = ''
+  PROFILE_NAME = '' # enter your profile name here
+
+  BUCKET = 'arxiv'
+  SRC_PREFIX = 'src'
+  PDF_PREFIX = 'pdf'
+  SRC_MANIFEST_FILE = 'arXiv_src_manifest.xml'
+  PDF_MANIFEST_FILE = 'arXiv_pdf_manifest.xml'
