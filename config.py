@@ -19,9 +19,13 @@ class ArXivConfig(object):
   SRC_MANIFEST_FILE = 'arXiv_src_manifest.xml'
   PDF_MANIFEST_FILE = 'arXiv_pdf_manifest.xml'
 
-  CMD_PREFIX = 'aws s3 --profile ' + PROFILE_NAME + ' '
-  CMD_PREFIX_LS = CMD_PREFIX + 'ls --request-payer requester '
-  CMD_PREFIX_CP = CMD_PREFIX + 'cp --request-payer requester '
-  CMD_PREFIX_SYNC = CMD_PREFIX + 'sync --requester-payer requester '
+  CMD_PREFIX = 'aws s3 --profile' + ' ' + PROFILE_NAME
+  CMD_PREFIX_LS = CMD_PREFIX + ' ' + 'ls --request-payer requester'
+  CMD_PREFIX_CP = CMD_PREFIX + ' ' + 'cp --request-payer requester'
+  CMD_PREFIX_SYNC = CMD_PREFIX + ' ' + 'sync --requester-payer requester'
   CMD_BUCKET_SRC = 's3://arxiv/src/'
   CMD_BUCKET_PDF = 's3://arxiv/pdf/'
+  CMD_LS_SRC = CMD_PREFIX_LS + ' ' + CMD_BUCKET_SRC
+  CMD_LS_PDF = CMD_PREFIX_LS + ' ' + CMD_BUCKET_PDF
+  CMD_DOWNLOAD_SRC_MANIFEST = CMD_PREFIX_CP + ' ' + CMD_BUCKET_SRC + SRC_MANIFEST_FILE + ' ' + SRC_DIR
+  CMD_DOWNLOAD_PDF_MANIFEST = CMD_PREFIX_CP + ' ' + CMD_BUCKET_PDF + PDF_MANIFEST_FILE + ' ' + PDF_DIR

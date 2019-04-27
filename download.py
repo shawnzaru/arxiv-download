@@ -11,12 +11,10 @@ class DownloadManager(object):
     self.config = config.ArXivConfig
 
   def _list_src_objects(self):
-    cmd = self.config.CMD_PREFIX_LS + self.config.CMD_BUCKET_SRC
-    call(cmd, shell=True)
+    call(self.config.CMD_LS_SRC, shell=True)
 
   def _list_pdf_objects(self):
-    cmd = self.config.CMD_PREFIX_LS + self.config.CMD_BUCKET_PDF
-    call(cmd, shell=True)
+    call(self.config.CMD_LS_PDF, shell=True)
 
   def check_src_manifest_exists(self):
     manifest_path = self.config.SRC_DIR + self.config.SRC_MANIFEST_FILE
@@ -44,23 +42,15 @@ class DownloadManager(object):
     pass
 
   def download_src_manifest(self):
-    cmd = self.config.CMD_PREFIX_CP \
-        + self.config.CMD_BUCKET_SRC \
-        + self.config.SRC_MANIFEST_FILE + ' ' \
-        + self.config.SRC_DIR
-    call(cmd, shell=True)
+    call(self.config.CMD_DOWNLOAD_SRC_MANIFEST, shell=True)
 
   def download_pdf_manifest(self):
-    cmd = self.config.CMD_PREFIX_CP \
-        + self.config.CMD_BUCKET_PDF \
-        + self.config.PDF_MANIFEST_FILE + ' ' \
-        + self.config.PDF_DIR
-    call(cmd, shell=True)
+    call(self.config.CMD_DOWNLOAD_PDF_MANIFEST, shell=True)
 
 if __name__ == '__main__':
   dm = DownloadManager()
-  #dm._list_src_objects()
-  #dm._list_pdf_objects()
+  dm._list_src_objects()
+  dm._list_pdf_objects()
 
   if dm.check_src_manifest_exists():
     print("src manifest exists.")
