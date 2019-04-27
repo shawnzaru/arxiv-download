@@ -1,4 +1,5 @@
 import os.path
+import hashlib
 from subprocess import call
 from time import time
 from datetime import datetime
@@ -23,6 +24,9 @@ class DownloadManager(object):
   def check_pdf_manifest_exists(self):
     manifest_path = self.config.PDF_DIR + self.config.PDF_MANIFEST_FILE
     return os.path.exists(manifest_path)
+
+  def _get_file_md5sum(self, file_path):
+    return hashlib.md5(open(file_path, 'rb').read()).hexdigit()
 
   def check_src_manifest_md5_identical(self):
     pass
