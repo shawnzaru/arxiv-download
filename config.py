@@ -22,7 +22,7 @@ class ArXivConfig(object):
   CMD_PREFIX = 'aws s3 --profile' + ' ' + PROFILE_NAME
   CMD_PREFIX_LS = CMD_PREFIX + ' ' + 'ls --request-payer requester'
   CMD_PREFIX_CP = CMD_PREFIX + ' ' + 'cp --request-payer requester'
-  CMD_PREFIX_SYNC = CMD_PREFIX + ' ' + 'sync --requester-payer requester'
+  CMD_PREFIX_SYNC = CMD_PREFIX + ' ' + 'sync --request-payer requester'
   CMD_BUCKET = 's3://arxiv/'
   CMD_BUCKET_SRC = 's3://arxiv/src/'
   CMD_BUCKET_PDF = 's3://arxiv/pdf/'
