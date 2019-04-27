@@ -25,8 +25,8 @@ class DownloadManager(object):
     manifest_path = self.config.PDF_DIR + self.config.PDF_MANIFEST_FILE
     return os.path.exists(manifest_path)
 
-  def _get_file_md5sum(self, file_path):
-    return hashlib.md5(open(file_path, 'rb').read()).hexdigit()
+  def _get_content_md5(self, file_path):
+    return hashlib.md5(open(file_path, 'rb').read()).hexdigest()
 
   def check_src_manifest_md5_identical(self):
     pass
@@ -69,3 +69,4 @@ if __name__ == '__main__':
     dm.download_pdf_manifest()
 
   print(dm._get_timestamp_suffix())
+  print(dm._get_content_md5(dm.config.SRC_DIR + dm.config.SRC_MANIFEST_FILE))
