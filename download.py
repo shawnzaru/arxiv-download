@@ -1,5 +1,6 @@
-import boto3
 import os.path
+import hashlib
+from subprocess import call
 from time import time
 from datetime import datetime
 
@@ -9,27 +10,12 @@ class DownloadManager(object):
 
   def __init__(self):
     self.config = config.ArXivConfig
-    self.session = boto3.session.Session(
-        aws_access_key_id=self.config.AWS_ACCESS_KEY_ID,
-        aws_secret_access_key=self.config.AWS_SECRET_ACCESS_KEY,
-        profile_name=self.config.PROFILE_NAME)
-    self.client = self.session.client('s3')
-
-  def _list_objects(self, prefix):
-    paginator = self.client.get_paginator('list_objects_v2')
-    page_iterator = paginator.paginate(
-        Bucket=self.config.BUCKET,
-        Prefix=prefix,
-        RequestPayer='requester')
-    for page in page_iterator:
-      for content in page['Contents']:
-        print(content['Key'])
 
   def _list_src_objects(self):
-    self._list_objects(self.config.SRC_PREFIX)
+    call(self.config.CMD_LS_SRC, shell=True)
 
   def _list_pdf_objects(self):
-    self._list_objects(self.config.PDF_PREFIX)
+    call(self.config.CMD_LS_PDF, shell=True)
 
   def check_src_manifest_exists(self):
     manifest_path = self.config.SRC_DIR + self.config.SRC_MANIFEST_FILE
@@ -38,6 +24,9 @@ class DownloadManager(object):
   def check_pdf_manifest_exists(self):
     manifest_path = self.config.PDF_DIR + self.config.PDF_MANIFEST_FILE
     return os.path.exists(manifest_path)
+
+  def _get_content_md5(self, file_path):
+    return hashlib.md5(open(file_path, 'rb').read()).hexdigest()
 
   def check_src_manifest_md5_identical(self):
     pass
@@ -57,24 +46,27 @@ class DownloadManager(object):
     pass
 
   def download_src_manifest(self):
-    pass
+    call(self.config.CMD_DOWNLOAD_SRC_MANIFEST, shell=True)
 
   def download_pdf_manifest(self):
-    pass
+    call(self.config.CMD_DOWNLOAD_PDF_MANIFEST, shell=True)
 
 if __name__ == '__main__':
   dm = DownloadManager()
-  #dm._list_src_objects()
-  #dm._list_pdf_objects()
+  dm._list_src_objects()
+  dm._list_pdf_objects()
 
   if dm.check_src_manifest_exists():
-    print("src manifest exists")
+    print("src manifest exists.")
   else:
-    print("src manifest does not exist")
+    print("src manifest does not exist. Download src manifest...")
+    dm.download_src_manifest()
 
   if dm.check_pdf_manifest_exists():
-    print("pdf manifest exists")
+    print("pdf manifest exists.")
   else:
-    print("pdf manifest does not exist")
+    print("pdf manifest does not exist. Download pdf manifest...")
+    dm.download_pdf_manifest()
 
   print(dm._get_timestamp_suffix())
+  print(dm._get_content_md5(dm.config.SRC_DIR + dm.config.SRC_MANIFEST_FILE))
