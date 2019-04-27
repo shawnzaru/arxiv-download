@@ -6,7 +6,10 @@ class DownloadManager(object):
 
   def __init__(self):
     self.config = config.ArXivConfig
-    self.session = boto3.session.Session(profile_name=self.config.PROFILE_NAME)
+    self.session = boto3.session.Session(
+        aws_access_key_id=self.config.AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=self.config.AWS_SECRET_ACCESS_KEY,
+        profile_name = self.config.PROFILE_NAME)
     self.client = self.session.client('s3')
 
   def _list_objects(self, prefix):
@@ -54,7 +57,7 @@ class DownloadManager(object):
 if __name__ == '__main__':
   dm = DownloadManager()
   #dm._list_src_objects()
-  #dm._list_pdf_objects()
+  dm._list_pdf_objects()
 
   if dm.check_src_manifest_exists():
     print("src manifest exists")

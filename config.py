@@ -9,9 +9,9 @@ class ArXivConfig(object):
   META_DATA_DIR	= DATA_DIR + '/meta-data'
   MAIN_FILE_DIR = DATA_DIR + '/main-files'
 
-  AWS_ACCESS_KEY_ID = ''
-  AWS_SECRET_ACCESS_KEY = ''
-  PROFILE_NAME = '' # enter your profile name here
+  AWS_ACCESS_KEY_ID = None
+  AWS_SECRET_ACCESS_KEY = None
+  PROFILE_NAME = 'shawn'  # enter your profile name here is sufficient
 
   BUCKET = 'arxiv'
   SRC_PREFIX = 'src'
