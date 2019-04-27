@@ -1,5 +1,5 @@
-import boto3
 import os.path
+from subprocess import call
 from time import time
 from datetime import datetime
 
@@ -9,27 +9,14 @@ class DownloadManager(object):
 
   def __init__(self):
     self.config = config.ArXivConfig
-    self.session = boto3.session.Session(
-        aws_access_key_id=self.config.AWS_ACCESS_KEY_ID,
-        aws_secret_access_key=self.config.AWS_SECRET_ACCESS_KEY,
-        profile_name=self.config.PROFILE_NAME)
-    self.client = self.session.client('s3')
-
-  def _list_objects(self, prefix):
-    paginator = self.client.get_paginator('list_objects_v2')
-    page_iterator = paginator.paginate(
-        Bucket=self.config.BUCKET,
-        Prefix=prefix,
-        RequestPayer='requester')
-    for page in page_iterator:
-      for content in page['Contents']:
-        print(content['Key'])
 
   def _list_src_objects(self):
-    self._list_objects(self.config.SRC_PREFIX)
+    cmd = self.config.CMD_PREFIX_LS + self.config.CMD_BUCKET_SRC
+    call(cmd, shell=True)
 
   def _list_pdf_objects(self):
-    self._list_objects(self.config.PDF_PREFIX)
+    cmd = self.config.CMD_PREFIX_LS + self.config.CMD_BUCKET_PDF
+    call(cmd, shell=True)
 
   def check_src_manifest_exists(self):
     manifest_path = self.config.SRC_DIR + self.config.SRC_MANIFEST_FILE
@@ -57,10 +44,18 @@ class DownloadManager(object):
     pass
 
   def download_src_manifest(self):
-    pass
+    cmd = self.config.CMD_PREFIX_CP \
+        + self.config.CMD_BUCKET_SRC \
+        + self.config.SRC_MANIFEST_FILE + ' ' \
+        + self.config.SRC_DIR
+    call(cmd, shell=True)
 
   def download_pdf_manifest(self):
-    pass
+    cmd = self.config.CMD_PREFIX_CP \
+        + self.config.CMD_BUCKET_PDF \
+        + self.config.PDF_MANIFEST_FILE + ' ' \
+        + self.config.PDF_DIR
+    call(cmd, shell=True)
 
 if __name__ == '__main__':
   dm = DownloadManager()
@@ -68,13 +63,15 @@ if __name__ == '__main__':
   #dm._list_pdf_objects()
 
   if dm.check_src_manifest_exists():
-    print("src manifest exists")
+    print("src manifest exists.")
   else:
-    print("src manifest does not exist")
+    print("src manifest does not exist. Download src manifest...")
+    dm.download_src_manifest()
 
   if dm.check_pdf_manifest_exists():
     print("pdf manifest exists")
   else:
-    print("pdf manifest does not exist")
+    print("pdf manifest does not exist. Download pdf manifest...")
+    dm.download_pdf_manifest()
 
   print(dm._get_timestamp_suffix())
