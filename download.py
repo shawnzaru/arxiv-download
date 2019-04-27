@@ -59,7 +59,7 @@ if __name__ == '__main__':
     dm.download_src_manifest()
 
   if dm.check_pdf_manifest_exists():
-    print("pdf manifest exists")
+    print("pdf manifest exists.")
   else:
     print("pdf manifest does not exist. Download pdf manifest...")
     dm.download_pdf_manifest()
