@@ -12,6 +12,7 @@ class ArXivConfig(object):
   PDF_DIR = DOWNLOAD_DIR + 'pdf/'
   META_DATA_DIR = DATA_DIR + 'meta-data/'
   MAIN_FILE_DIR = DATA_DIR + 'main-files/'
+  CACHE_DIR = DATA_DIR + 'cache/'
 
   BUCKET = 'arxiv'
   SRC_PREFIX = 'src'
@@ -48,6 +49,7 @@ if __name__ == '__main__':
   print("PDF_DIR:", cfg.PDF_DIR)
   print("META_DATA_DIR:", cfg.META_DATA_DIR)
   print("MAIN_FILE_DIR:", cfg.MAIN_FILE_DIR)
+  print("CACHE_DIR:", cfg.CACHE_DIR)
   print("BUCKET:", cfg.BUCKET)
   print("SRC_PREFIX:", cfg.SRC_PREFIX)
   print("PDF_PREFIX:", cfg.PDF_PREFIX)
