@@ -1,6 +1,10 @@
 import os
 
 class ArXivConfig(object):
+  PROFILE_NAME = 'shawn'  # enter your profile name here is sufficient
+  AWS_ACCESS_KEY_ID = None
+  AWS_SECRET_ACCESS_KEY = None
+
   ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
   DATA_DIR = ROOT_DIR + '/data'
   DOWNLOAD_DIR = DATA_DIR + '/downloads'
@@ -8,10 +12,6 @@ class ArXivConfig(object):
   PDF_DIR = DOWNLOAD_DIR + '/pdf/'
   META_DATA_DIR	= DATA_DIR + '/meta-data/'
   MAIN_FILE_DIR = DATA_DIR + '/main-files/'
-
-  AWS_ACCESS_KEY_ID = None
-  AWS_SECRET_ACCESS_KEY = None
-  PROFILE_NAME = 'shawn'  # enter your profile name here is sufficient
 
   BUCKET = 'arxiv'
   SRC_PREFIX = 'src'
