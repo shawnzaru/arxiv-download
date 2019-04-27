@@ -20,9 +20,10 @@ class ArXivConfig(object):
   PDF_MANIFEST_FILE = 'arXiv_pdf_manifest.xml'
 
   CMD_PREFIX = 'aws s3 --profile' + ' ' + PROFILE_NAME
-  CMD_PREFIX_LS = CMD_PREFIX + ' ' + 'ls --request-payer requester'
-  CMD_PREFIX_CP = CMD_PREFIX + ' ' + 'cp --request-payer requester'
-  CMD_PREFIX_SYNC = CMD_PREFIX + ' ' + 'sync --request-payer requester'
+  PAYER_OPTION = '--request-payer requester'
+  CMD_PREFIX_LS = CMD_PREFIX + ' ' + 'ls' + ' ' + PAYER_OPTION
+  CMD_PREFIX_CP = CMD_PREFIX + ' ' + 'cp' + ' ' + PAYER_OPTION
+  CMD_PREFIX_SYNC = CMD_PREFIX + ' ' + 'sync' + ' ' + PAYER_OPTION
   CMD_BUCKET = 's3://arxiv/'
   CMD_BUCKET_SRC = 's3://arxiv/src/'
   CMD_BUCKET_PDF = 's3://arxiv/pdf/'
@@ -53,6 +54,7 @@ if __name__ == '__main__':
   print("SRC_MANIFEST_FILE:", cfg.SRC_MANIFEST_FILE)
   print("PDF_MANIFEST_FILE:", cfg.PDF_MANIFEST_FILE)
   print("CMD_PREFIX:", cfg.CMD_PREFIX)
+  print("PAYER_OPTION:", cfg.PAYER_OPTION)
   print("CMD_PREFIX_LS:", cfg.CMD_PREFIX_LS)
   print("CMD_PREFIX_CP:", cfg.CMD_PREFIX_CP)
   print("CMD_PREFIX_SYNC:", cfg.CMD_PREFIX_SYNC)
