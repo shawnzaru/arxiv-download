@@ -1,6 +1,9 @@
 import boto3
-import config
 import os.path
+from time import time
+from datetime import datetime
+
+import config
 
 class DownloadManager(object):
 
@@ -42,6 +45,11 @@ class DownloadManager(object):
   def check_pdf_manifest_md5_identical(self):
     pass
 
+  def _get_timestamp_suffix(self):
+    ts = time()
+    suffix = datetime.fromtimestamp(ts).strftime('%Y-%m-%d-%H-%M-%S')
+    return suffix
+
   def rename_old_src_manifest(self):
     pass
 
@@ -57,7 +65,7 @@ class DownloadManager(object):
 if __name__ == '__main__':
   dm = DownloadManager()
   #dm._list_src_objects()
-  dm._list_pdf_objects()
+  #dm._list_pdf_objects()
 
   if dm.check_src_manifest_exists():
     print("src manifest exists")
@@ -68,3 +76,5 @@ if __name__ == '__main__':
     print("pdf manifest exists")
   else:
     print("pdf manifest does not exist")
+
+  print(dm._get_timestamp_suffix())
