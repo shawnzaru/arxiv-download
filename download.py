@@ -98,6 +98,12 @@ class DownloadManager(object):
   def download_pdf_manifest(self):
     call(self.config.CMD_DOWNLOAD_PDF_MANIFEST, shell=True)
 
+  def download_src_manifest_cache(self):
+    call(self.config.CMD_DOWNLOAD_SRC_MANIFEST_CACHE, shell=True)
+
+  def download_pdf_manifest_cache(self):
+    call(self.config.CMD_DOWNLOAD_PDF_MANIFEST_CACHE, shell=True)
+
   def download_src_object(self, tar, dryrun=True):
     cmd = self.config.CMD_DOWNLOAD_SRC_OBJECT % tar
     cmd = self._check_dryrun(cmd, dryrun)
