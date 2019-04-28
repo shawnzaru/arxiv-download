@@ -17,14 +17,19 @@ class DownloadManager(object):
   def _list_pdf_objects(self):
     call(self.config.CMD_LS_PDF, shell=True)
 
+  def _add_dryrun(self, cmd, dryrun):
+    if dryrun:
+      cmd += ' ' + '--dryrun'
+    return cmd
+
   def sync_all(self, dryrun=True):
-    pass
+    print(self._add_dryrun(self.config.CMD_SYNC_ALL, dryrun))
 
   def sync_src(self, dryrun=True):
-    pass
+    print(self._add_dryrun(self.config.CMD_SYNC_SRC, dryrun))
 
   def sync_pdf(self, dryrun=True):
-    pass
+    print(self._add_dryrun(self.config.CMD_SYNC_PDF, dryrun))
 
   def check_src_manifest_exists(self):
     manifest_path = self.config.SRC_DIR + self.config.SRC_MANIFEST_FILE
@@ -62,14 +67,12 @@ class DownloadManager(object):
 
   def download_src_object(self, tar, dryrun=True):
     cmd = self.config.CMD_DOWNLOAD_SRC_OBJECT % tar
-    if dryrun:
-      cmd += ' ' + '--dryrun'
+    cmd = self._add_dryrun(cmd, dryrun)
     call(cmd, shell=True)
 
   def download_pdf_object(self, tar, dryrun=True):
     cmd = self.config.CMD_DOWNLOAD_PDF_OBJECT % tar
-    if dryrun:
-      cmd += ' ' + '--dryrun'
+    cmd = self._add_dryrun(cmd, dryrun)
     call(cmd, shell=True)
 
 
@@ -95,3 +98,6 @@ if __name__ == '__main__':
 
   dm.download_src_object('arXiv_src_0001_001.tar')
   dm.download_pdf_object('arXiv_pdf_0001_001.tar')
+  dm.sync_all()
+  dm.sync_src()
+  dm.sync_pdf()
