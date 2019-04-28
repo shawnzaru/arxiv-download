@@ -78,10 +78,10 @@ class DownloadManager(object):
   def download_pdf_manifest(self):
     call(self.config.CMD_DOWNLOAD_PDF_MANIFEST, shell=True)
 
-  def download_src_manifest_cache(self):
+  def _download_src_manifest_cache(self):
     call(self.config.CMD_DOWNLOAD_SRC_MANIFEST_CACHE, shell=True)
 
-  def download_pdf_manifest_cache(self):
+  def _download_pdf_manifest_cache(self):
     call(self.config.CMD_DOWNLOAD_PDF_MANIFEST_CACHE, shell=True)
 
   def download_src_object(self, tar, dryrun=True):
@@ -97,11 +97,27 @@ class DownloadManager(object):
   def _get_content_md5(self, file_path):
     return hashlib.md5(open(file_path, 'rb').read()).hexdigest()
 
-  def check_src_manifest_md5_identical(self):
-    pass
+  def check_remote_src_manifest_identical(self):
+    print("Cache remote src manifest...")
+    self._download_src_manifest_cache()
+    remote_src_manifest = self.config.CACHE_DIR + self.config.SRC_MANIFEST_FILE
+    local_src_manifest = self.config.SRC_DIR + self.config.SRC_MANIFEST_FILE
+    remote_src_manifest_md5 = self._get_content_md5(remote_src_manifest)
+    local_src_manifest_md5 = self._get_content_md5(local_src_manifest)
+    print("remote_src_manifest: %s [%s]" % (remote_src_manifest, remote_src_manifest_md5))
+    print("local_src_manifest: %s [%s]" % (local_src_manifest, local_src_manifest_md5))
+    return local_src_manifest_md5 == remote_src_manifest_md5
 
-  def check_pdf_manifest_md5_identical(self):
-    pass
+  def check_remote_pdf_manifest_identical(self):
+    print("Cache remote pdf manifest...")
+    self._download_src_manifest_cache()
+    remote_pdf_manifest = self.config.CACHE_DIR + self.config.SRC_MANIFEST_FILE
+    local_pdf_manifest = self.config.SRC_DIR + self.config.SRC_MANIFEST_FILE
+    remote_pdf_manifest_md5 = self._get_content_md5(remote_pdf_manifest)
+    local_pdf_manifest_md5 = self._get_content_md5(local_pdf_manifest)
+    print("remote_pdf_manifest: %s [%s]" % (remote_pdf_manifest, remote_pdf_manifest_md5))
+    print("local_pdf_manifest: %s [%s]" % (local_pdf_manifest, local_pdf_manifest_md5))
+    return local_pdf_manifest_md5 == remote_pdf_manifest_md5
 
   def _get_timestamp_suffix(self):
     ts = time()
@@ -138,7 +154,6 @@ if __name__ == '__main__':
     dm.download_pdf_manifest()
 
   print(dm._get_timestamp_suffix())
-  print(dm._get_content_md5(dm.config.SRC_DIR + dm.config.SRC_MANIFEST_FILE))
 
   # dryrun is defaulted to be True so that there is no real download.
   dm.download_src_object('arXiv_src_0001_001.tar', dryrun=True)
@@ -146,3 +161,13 @@ if __name__ == '__main__':
   #dm.sync_all(dryrun=True)
   #dm.sync_src(dryrun=True)
   #dm.sync_pdf(dryrun=True)
+
+  if dm.check_remote_src_manifest_identical():
+    print("The src manifest is the newest.")
+  else:
+    print("The src manifest is out-dated.")
+
+  if dm.check_remote_pdf_manifest_identical():
+    print("The pdf manifest is the newest.")
+  else:
+    print("The pdf manifest is out-dated.")
