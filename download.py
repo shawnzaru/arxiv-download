@@ -47,13 +47,19 @@ class DownloadManager(object):
     return cmd
 
   def sync_all(self, dryrun=True):
-    print(self._check_dryrun_with_prompt(self.config.CMD_SYNC_ALL, dryrun))
+    cmd = self.config.CMD_SYNC_ALL
+    cmd = self._check_dryrun_with_prompt(cmd, dryrun)
+    call(cmd, shell=True)
 
   def sync_src(self, dryrun=True):
-    print(self._check_dryrun_with_prompt(self.config.CMD_SYNC_SRC, dryrun))
+    cmd = self.config.CMD_SYNC_SRC
+    cmd = self._check_dryrun_with_prompt(cmd, dryrun)
+    call(cmd, shell=True)
 
   def sync_pdf(self, dryrun=True):
-    print(self._check_dryrun_with_prompt(self.config.CMD_SYNC_PDF, dryrun))
+    cmd = self.config.CMD_SYNC_PDF
+    cmd = self._check_dryrun_with_prompt(cmd, dryrun)
+    call(cmd, shell=True)
 
   def check_src_manifest_exists(self):
     manifest_path = self.config.SRC_DIR + self.config.SRC_MANIFEST_FILE
@@ -120,8 +126,9 @@ if __name__ == '__main__':
   print(dm._get_timestamp_suffix())
   print(dm._get_content_md5(dm.config.SRC_DIR + dm.config.SRC_MANIFEST_FILE))
 
-  dm.download_src_object('arXiv_src_0001_001.tar')
-  dm.download_pdf_object('arXiv_pdf_0001_001.tar')
-  dm.sync_all(dryrun=False)
-  dm.sync_src()
-  dm.sync_pdf()
+  # dryrun is defaulted to be True so that there is no real download.
+  dm.download_src_object('arXiv_src_0001_001.tar', dryrun=True)
+  dm.download_pdf_object('arXiv_pdf_0001_001.tar', dryrun=True)
+  dm.sync_all(dryrun=True)
+  #dm.sync_src(dryrun=True)
+  #dm.sync_pdf(dryrun=True)
