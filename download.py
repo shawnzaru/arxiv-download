@@ -72,26 +72,6 @@ class DownloadManager(object):
     manifest_path = self.config.PDF_DIR + self.config.PDF_MANIFEST_FILE
     return os.path.exists(manifest_path)
 
-  def _get_content_md5(self, file_path):
-    return hashlib.md5(open(file_path, 'rb').read()).hexdigest()
-
-  def check_src_manifest_md5_identical(self):
-    pass
-
-  def check_pdf_manifest_md5_identical(self):
-    pass
-
-  def _get_timestamp_suffix(self):
-    ts = time()
-    suffix = datetime.fromtimestamp(ts).strftime('%Y-%m-%d-%H-%M-%S')
-    return suffix
-
-  def rename_old_src_manifest(self):
-    pass
-
-  def rename_old_pdf_manifest(self):
-    pass
-
   def download_src_manifest(self):
     call(self.config.CMD_DOWNLOAD_SRC_MANIFEST, shell=True)
 
@@ -114,6 +94,26 @@ class DownloadManager(object):
     cmd = self._check_dryrun(cmd, dryrun)
     call(cmd, shell=True)
 
+  def _get_content_md5(self, file_path):
+    return hashlib.md5(open(file_path, 'rb').read()).hexdigest()
+
+  def check_src_manifest_md5_identical(self):
+    pass
+
+  def check_pdf_manifest_md5_identical(self):
+    pass
+
+  def _get_timestamp_suffix(self):
+    ts = time()
+    suffix = datetime.fromtimestamp(ts).strftime('%Y-%m-%d-%H-%M-%S')
+    return suffix
+
+  def rename_old_src_manifest(self):
+    pass
+
+  def rename_old_pdf_manifest(self):
+    pass
+
 
 if __name__ == '__main__':
   dm = DownloadManager()
@@ -121,7 +121,7 @@ if __name__ == '__main__':
   #dm._list_pdf_objects()
 
   if not dm.check_data_dir_exists():
-    print("Directory 'data' does not exist. This is the first run.")
+    print("Data does not exist. This is the first run.")
     dm.sync_all(dryrun=True)
     sys.exit(0)
 
