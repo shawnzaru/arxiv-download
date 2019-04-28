@@ -41,7 +41,7 @@ class DownloadManager(object):
     else:
       print("You are going to run the following resource-critical command:")
       print(cmd)
-      print("Make sure you have more than 2TiB free space in %s." % self.config.DATA_DIR)
+      print("Make sure you have more than 2TiB of free space in %s." % self.config.DATA_DIR)
       print("This process may take hours. Make sure your SSH session is persistent.")
       self._yes_or_quit()
     return cmd
