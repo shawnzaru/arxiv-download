@@ -19,6 +19,9 @@ class DownloadManager(object):
   def _list_pdf_objects(self):
     call(self.config.CMD_LS_PDF, shell=True)
 
+  def check_data_dir_exists(self):
+    return os.path.exists(self.config.DATA_DIR)
+
   def _check_dryrun(self, cmd, dryrun):
     if dryrun:
       cmd += ' ' + '--dryrun'
@@ -111,6 +114,11 @@ if __name__ == '__main__':
   #dm._list_src_objects()
   #dm._list_pdf_objects()
 
+  if not dm.check_data_dir_exists():
+    print("Directory 'data' does not exist. This is the first run.")
+    dm.sync_all(dryrun=True)
+    sys.exit(0)
+
   if dm.check_src_manifest_exists():
     print("src manifest exists.")
   else:
@@ -129,6 +137,6 @@ if __name__ == '__main__':
   # dryrun is defaulted to be True so that there is no real download.
   dm.download_src_object('arXiv_src_0001_001.tar', dryrun=True)
   dm.download_pdf_object('arXiv_pdf_0001_001.tar', dryrun=True)
-  dm.sync_all(dryrun=True)
+  #dm.sync_all(dryrun=True)
   #dm.sync_src(dryrun=True)
   #dm.sync_pdf(dryrun=True)
