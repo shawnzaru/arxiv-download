@@ -22,8 +22,18 @@ class DownloadManager(object):
       cmd += ' ' + '--dryrun'
     return cmd
 
+  def _check_dryrun_with_prompt(self, cmd, dryrun):
+    if dryrun:
+      cmd += ' ' + '--dryrun'
+    else:
+      print("You are going to run the following resource-critical command:")
+      print(cmd)
+      input("Are you sure you want to continue? [no|yes]: ")
+      # todo....
+    return cmd
+
   def sync_all(self, dryrun=True):
-    print(self._check_dryrun(self.config.CMD_SYNC_ALL, dryrun))
+    print(self._check_dryrun_with_prompt(self.config.CMD_SYNC_ALL, dryrun))
 
   def sync_src(self, dryrun=True):
     print(self._check_dryrun(self.config.CMD_SYNC_SRC, dryrun))
@@ -98,6 +108,6 @@ if __name__ == '__main__':
 
   dm.download_src_object('arXiv_src_0001_001.tar')
   dm.download_pdf_object('arXiv_pdf_0001_001.tar')
-  dm.sync_all()
+  dm.sync_all(dryrun=False)
   dm.sync_src()
   dm.sync_pdf()
