@@ -24,6 +24,17 @@ class DownloadManager(object):
       cmd += ' ' + '--dryrun'
     return cmd
 
+  # 'y', 'yes', 't', 'true', 'on' and '1' evaluated to True, otherwise False
+  def _yes_or_quit(self):
+    ans_str = input("Are you sure you want to continue? [*no*|yes]: ")
+    try:
+      ans_bool = strtobool(ans_str)
+    except:
+      ans_bool = False
+    if ans_bool == False:
+      print("The program exits.")
+      sys.exit()
+
   def _check_dryrun_with_prompt(self, cmd, dryrun):
     if dryrun:
       cmd += ' ' + '--dryrun'
@@ -32,15 +43,7 @@ class DownloadManager(object):
       print(cmd)
       print("Make sure you have more than 2TiB free space in %s." % self.config.DATA_DIR)
       print("This process may take hours. Make sure your SSH session is persistent.")
-      ans_str = input("Are you sure you want to continue? [*no*|yes]: ")
-      # 'y', 'yes', 't', 'true', 'on' and '1' evaluated to True, otherwise False
-      try:
-        ans_bool = strtobool(ans_str)
-      except:
-        ans_bool = False
-      if ans_bool == False:
-        print("The program exits.")
-        sys.exit()
+      self._yes_or_quit()
     return cmd
 
   def sync_all(self, dryrun=True):
