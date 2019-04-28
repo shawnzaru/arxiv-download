@@ -1,8 +1,10 @@
+import sys
 import os.path
 import hashlib
 from subprocess import call
 from time import time
 from datetime import datetime
+from distutils.util import strtobool
 
 import config
 
@@ -28,18 +30,27 @@ class DownloadManager(object):
     else:
       print("You are going to run the following resource-critical command:")
       print(cmd)
-      input("Are you sure you want to continue? [no|yes]: ")
-      # todo....
+      print("Make sure you have more than 2TiB free space in %s." % self.config.DATA_DIR)
+      print("This process may take hours. Make sure your SSH session is persistent.")
+      ans_str = input("Are you sure you want to continue? [*no*|yes]: ")
+      # 'y', 'yes', 't', 'true', 'on' and '1' evaluated to True, otherwise False
+      try:
+        ans_bool = strtobool(ans_str)
+      except:
+        ans_bool = False
+      if ans_bool == False:
+        print("The program exits.")
+        sys.exit()
     return cmd
 
   def sync_all(self, dryrun=True):
     print(self._check_dryrun_with_prompt(self.config.CMD_SYNC_ALL, dryrun))
 
   def sync_src(self, dryrun=True):
-    print(self._check_dryrun(self.config.CMD_SYNC_SRC, dryrun))
+    print(self._check_dryrun_with_prompt(self.config.CMD_SYNC_SRC, dryrun))
 
   def sync_pdf(self, dryrun=True):
-    print(self._check_dryrun(self.config.CMD_SYNC_PDF, dryrun))
+    print(self._check_dryrun_with_prompt(self.config.CMD_SYNC_PDF, dryrun))
 
   def check_src_manifest_exists(self):
     manifest_path = self.config.SRC_DIR + self.config.SRC_MANIFEST_FILE
