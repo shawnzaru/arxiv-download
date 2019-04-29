@@ -28,6 +28,7 @@ conda activate arxiv
 ```python
 # temporary
 # conda install numpy scipy pandas matplotlib jupyter
+conda install sqlalchemy
 
 # awscli is the command-line utlity 'aws', which is crucial for our task
 pip install awscli
@@ -37,7 +38,7 @@ pip install awscli
 ```
 aws configure --profile YOUR_PROFILE_NAME
 ```
-and enter your aws credentials.
+and enter your aws credentials. This only needs to be configured once.
 
 ### Data Structure
  arxiv_download
