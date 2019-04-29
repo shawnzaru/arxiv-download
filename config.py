@@ -21,6 +21,10 @@ class ArXivConfig(object):
   PDF_PREFIX = 'pdf'
   SRC_MANIFEST_FILE = 'arXiv_src_manifest.xml'
   PDF_MANIFEST_FILE = 'arXiv_pdf_manifest.xml'
+  SRC_MANIFEST_PATH = os.path.join(SRC_DIR, SRC_MANIFEST_FILE)
+  PDF_MANIFEST_PATH = os.path.join(PDF_DIR, PDF_MANIFEST_FILE)
+  SRC_MANIFEST_PATH_CACHE = os.path.join(CACHE_DIR, SRC_MANIFEST_FILE)
+  PDF_MANIFEST_PATH_CACHE = os.path.join(CACHE_DIR, PDF_MANIFEST_FILE)
 
   CMD_PREFIX = 'aws s3 --profile' + ' ' + PROFILE_NAME
   PAYER_OPTION = '--request-payer requester'
@@ -63,6 +67,10 @@ if __name__ == '__main__':
   print("PDF_PREFIX:", cfg.PDF_PREFIX)
   print("SRC_MANIFEST_FILE:", cfg.SRC_MANIFEST_FILE)
   print("PDF_MANIFEST_FILE:", cfg.PDF_MANIFEST_FILE)
+  print("SRC_MANIFEST_PATH:", cfg.SRC_MANIFEST_PATH)
+  print("PDF_MANIFEST_PATH:", cfg.PDF_MANIFEST_PATH)
+  print("SRC_MANIFEST_PATH_CACHE:", cfg.SRC_MANIFEST_PATH_CACHE)
+  print("PDF_MANIFEST_PATH_CACHE:", cfg.PDF_MANIFEST_PATH_CACHE)
   print("CMD_PREFIX:", cfg.CMD_PREFIX)
   print("PAYER_OPTION:", cfg.PAYER_OPTION)
   print("CMD_PREFIX_LS:", cfg.CMD_PREFIX_LS)
