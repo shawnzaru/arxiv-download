@@ -65,11 +65,11 @@ class DownloadManager(object):
     call(cmd, shell=True)
 
   def check_src_manifest_exists(self):
-    manifest_path = self.config.SRC_DIR + self.config.SRC_MANIFEST_FILE
+    manifest_path = os.path.join(self.config.SRC_DIR, self.config.SRC_MANIFEST_FILE)
     return os.path.exists(manifest_path)
 
   def check_pdf_manifest_exists(self):
-    manifest_path = self.config.PDF_DIR + self.config.PDF_MANIFEST_FILE
+    manifest_path = os.path.join(self.config.PDF_DIR, self.config.PDF_MANIFEST_FILE)
     return os.path.exists(manifest_path)
 
   def download_src_manifest(self):
@@ -100,8 +100,8 @@ class DownloadManager(object):
   def check_remote_src_manifest_identical(self):
     print("Cache remote src manifest...")
     self._download_src_manifest_cache()
-    remote_src_manifest = self.config.CACHE_DIR + self.config.SRC_MANIFEST_FILE
-    local_src_manifest = self.config.SRC_DIR + self.config.SRC_MANIFEST_FILE
+    remote_src_manifest = os.path.join(self.config.CACHE_DIR, self.config.SRC_MANIFEST_FILE)
+    local_src_manifest = os.path.join(self.config.SRC_DIR, self.config.SRC_MANIFEST_FILE)
     remote_src_manifest_md5 = self._get_content_md5(remote_src_manifest)
     local_src_manifest_md5 = self._get_content_md5(local_src_manifest)
     print("remote_src_manifest: %s [%s]" % (remote_src_manifest, remote_src_manifest_md5))
@@ -110,9 +110,9 @@ class DownloadManager(object):
 
   def check_remote_pdf_manifest_identical(self):
     print("Cache remote pdf manifest...")
-    self._download_src_manifest_cache()
-    remote_pdf_manifest = self.config.CACHE_DIR + self.config.SRC_MANIFEST_FILE
-    local_pdf_manifest = self.config.SRC_DIR + self.config.SRC_MANIFEST_FILE
+    self._download_pdf_manifest_cache()
+    remote_pdf_manifest = os.path.join(self.config.CACHE_DIR, self.config.SRC_MANIFEST_FILE)
+    local_pdf_manifest = os.path.join(self.config.SRC_DIR, self.config.SRC_MANIFEST_FILE)
     remote_pdf_manifest_md5 = self._get_content_md5(remote_pdf_manifest)
     local_pdf_manifest_md5 = self._get_content_md5(local_pdf_manifest)
     print("remote_pdf_manifest: %s [%s]" % (remote_pdf_manifest, remote_pdf_manifest_md5))

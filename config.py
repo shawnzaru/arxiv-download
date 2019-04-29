@@ -1,4 +1,5 @@
 import os
+import os.path
 
 class ArXivConfig(object):
 
@@ -7,13 +8,13 @@ class ArXivConfig(object):
   AWS_SECRET_ACCESS_KEY = None
 
   ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-  DATA_DIR = ROOT_DIR + '/data/'
-  DOWNLOAD_DIR = DATA_DIR + 'downloads/'
-  SRC_DIR = DOWNLOAD_DIR + 'src/'
-  PDF_DIR = DOWNLOAD_DIR + 'pdf/'
-  META_DATA_DIR = DATA_DIR + 'meta-data/'
-  MAIN_FILE_DIR = DATA_DIR + 'main-files/'
-  CACHE_DIR = DATA_DIR + 'cache/'
+  DATA_DIR = os.path.join(ROOT_DIR, 'data')
+  DOWNLOAD_DIR = os.path.join(DATA_DIR, 'downloads')
+  SRC_DIR = os.path.join(DOWNLOAD_DIR, 'src')
+  PDF_DIR = os.path.join(DOWNLOAD_DIR, 'pdf')
+  META_DATA_DIR = os.path.join(DATA_DIR, 'meta-data')
+  MAIN_FILE_DIR = os.path.join(DATA_DIR, 'main-files')
+  CACHE_DIR = os.path.join(DATA_DIR,'cache')
 
   BUCKET = 'arxiv'
   SRC_PREFIX = 'src'
@@ -30,17 +31,17 @@ class ArXivConfig(object):
   CMD_BUCKET_SRC = 's3://arxiv/src/'
   CMD_BUCKET_PDF = 's3://arxiv/pdf/'
 
-  CMD_SYNC_ALL = CMD_PREFIX_SYNC + ' ' + CMD_BUCKET + ' ' + DOWNLOAD_DIR
-  CMD_SYNC_SRC = CMD_PREFIX_SYNC + ' ' + CMD_BUCKET_SRC + ' ' + SRC_DIR
-  CMD_SYNC_PDF = CMD_PREFIX_SYNC + ' ' + CMD_BUCKET_PDF + ' ' + PDF_DIR
+  CMD_SYNC_ALL = CMD_PREFIX_SYNC + ' ' + CMD_BUCKET + ' ' + DOWNLOAD_DIR + os.sep
+  CMD_SYNC_SRC = CMD_PREFIX_SYNC + ' ' + CMD_BUCKET_SRC + ' ' + SRC_DIR + os.sep
+  CMD_SYNC_PDF = CMD_PREFIX_SYNC + ' ' + CMD_BUCKET_PDF + ' ' + PDF_DIR + os.sep
   CMD_LS_SRC = CMD_PREFIX_LS + ' ' + CMD_BUCKET_SRC
   CMD_LS_PDF = CMD_PREFIX_LS + ' ' + CMD_BUCKET_PDF
-  CMD_DOWNLOAD_SRC_MANIFEST = CMD_PREFIX_CP + ' ' + CMD_BUCKET_SRC + SRC_MANIFEST_FILE + ' ' + SRC_DIR
-  CMD_DOWNLOAD_PDF_MANIFEST = CMD_PREFIX_CP + ' ' + CMD_BUCKET_PDF + PDF_MANIFEST_FILE + ' ' + PDF_DIR
-  CMD_DOWNLOAD_SRC_MANIFEST_CACHE = CMD_PREFIX_CP + ' ' + CMD_BUCKET_SRC + SRC_MANIFEST_FILE + ' ' + CACHE_DIR
-  CMD_DOWNLOAD_PDF_MANIFEST_CACHE = CMD_PREFIX_CP + ' ' + CMD_BUCKET_PDF + PDF_MANIFEST_FILE + ' ' + CACHE_DIR
-  CMD_DOWNLOAD_SRC_OBJECT = CMD_PREFIX_CP + ' ' + CMD_BUCKET_SRC + '%s' + ' ' + SRC_DIR
-  CMD_DOWNLOAD_PDF_OBJECT = CMD_PREFIX_CP + ' ' + CMD_BUCKET_PDF + '%s' + ' ' + PDF_DIR
+  CMD_DOWNLOAD_SRC_MANIFEST = CMD_PREFIX_CP + ' ' + CMD_BUCKET_SRC + SRC_MANIFEST_FILE + ' ' + SRC_DIR + os.sep
+  CMD_DOWNLOAD_PDF_MANIFEST = CMD_PREFIX_CP + ' ' + CMD_BUCKET_PDF + PDF_MANIFEST_FILE + ' ' + PDF_DIR + os.sep
+  CMD_DOWNLOAD_SRC_MANIFEST_CACHE = CMD_PREFIX_CP + ' ' + CMD_BUCKET_SRC + SRC_MANIFEST_FILE + ' ' + CACHE_DIR + os.sep
+  CMD_DOWNLOAD_PDF_MANIFEST_CACHE = CMD_PREFIX_CP + ' ' + CMD_BUCKET_PDF + PDF_MANIFEST_FILE + ' ' + CACHE_DIR + os.sep
+  CMD_DOWNLOAD_SRC_OBJECT = CMD_PREFIX_CP + ' ' + CMD_BUCKET_SRC + '%s' + ' ' + SRC_DIR + os.sep
+  CMD_DOWNLOAD_PDF_OBJECT = CMD_PREFIX_CP + ' ' + CMD_BUCKET_PDF + '%s' + ' ' + PDF_DIR + os.sep
 
 
 
