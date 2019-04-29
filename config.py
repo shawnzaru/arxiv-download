@@ -14,7 +14,7 @@ class ArXivConfig(object):
   PDF_DIR = os.path.join(DOWNLOAD_DIR, 'pdf')
   META_DATA_DIR = os.path.join(DATA_DIR, 'meta-data')
   MAIN_FILE_DIR = os.path.join(DATA_DIR, 'main-files')
-  CACHE_DIR = os.path.join(DATA_DIR,'cache')
+  CACHE_DIR = os.path.join(DATA_DIR, 'cache')
 
   BUCKET = 'arxiv'
   SRC_PREFIX = 'src'
