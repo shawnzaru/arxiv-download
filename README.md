@@ -28,7 +28,7 @@ conda activate arxiv
 ```python
 # temporary
 # conda install numpy scipy pandas matplotlib jupyter
-conda install sqlalchemy
+conda install sqlalchemy lxml
 
 # awscli is the command-line utlity 'aws', which is crucial for our task
 pip install awscli
