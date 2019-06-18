@@ -1,4 +1,5 @@
 import sys
+import os
 import os.path
 import hashlib
 from subprocess import call
@@ -120,10 +121,16 @@ class DownloadManager(object):
     return suffix
 
   def rename_old_src_manifest(self):
-    pass
+    old_name = self.config.SRC_MANIFEST_PATH
+    new_name = self.config.SRC_MANIFEST_PATH + '_' + self._get_timestamp_suffix()
+    os.rename(old_name, new_name)
+    print("rename %s to %s" % (old_name, new_name))
 
   def rename_old_pdf_manifest(self):
-    pass
+    old_name = self.config.PDF_MANIFEST_PATH
+    new_name = self.config.PDF_MANIFEST_PATH + '_' + self._get_timestamp_suffix()
+    os.rename(old_name, new_name)
+    print("rename %s to %s" % (old_name, new_name))
 
 
 if __name__ == '__main__':
@@ -161,8 +168,11 @@ if __name__ == '__main__':
     print("The src manifest is the newest.")
   else:
     print("The src manifest is out-dated.")
+    dm.rename_old_src_manifest()
 
   if dm.check_remote_pdf_manifest_identical():
     print("The pdf manifest is the newest.")
   else:
     print("The pdf manifest is out-dated.")
+    dm.rename_old_pdf_manifest()
+
