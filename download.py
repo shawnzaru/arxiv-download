@@ -37,7 +37,7 @@ class DownloadManager(object):
       ans_bool = False
     if ans_bool == False:
       print("The program exits.")
-      sys.exit()
+      sys.exit(0)
 
   def _check_dryrun_with_prompt(self, cmd, dryrun):
     if dryrun:
@@ -138,6 +138,7 @@ if __name__ == '__main__':
   #dm._list_src_objects()
   #dm._list_pdf_objects()
 
+  # dryrun is defaulted to be True so that there is no real download.
   if not dm.check_data_dir_exists():
     print("Data does not exist. This is the first run.")
     dm.sync_all(dryrun=True)
@@ -157,7 +158,6 @@ if __name__ == '__main__':
 
   print(dm._get_timestamp_suffix())
 
-  # dryrun is defaulted to be True so that there is no real download.
   dm.download_src_object('arXiv_src_0001_001.tar', dryrun=True)
   dm.download_pdf_object('arXiv_pdf_0001_001.tar', dryrun=True)
   #dm.sync_all(dryrun=True)
@@ -168,11 +168,11 @@ if __name__ == '__main__':
     print("The src manifest is the newest.")
   else:
     print("The src manifest is out-dated.")
-    dm.rename_old_src_manifest()
+    #dm.rename_old_src_manifest()
 
   if dm.check_remote_pdf_manifest_identical():
     print("The pdf manifest is the newest.")
   else:
     print("The pdf manifest is out-dated.")
-    dm.rename_old_pdf_manifest()
+    #dm.rename_old_pdf_manifest()
 
