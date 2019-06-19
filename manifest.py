@@ -13,9 +13,9 @@ def compare_manifest_xml(manifest_xml_cache, manifest_xml_local):
     if tar.filename in manifest_local.filename2index:
       local_md5sum = manifest_local.get_md5sum_by_filename(tar.filename)
       if tar.md5sum != local_md5sum:
-        print("[C] %s" % tar.filename)
+        print("@diff [C] %s" % tar.filename)
     else:
-      print("[A] %s" % tar.filename)
+      print("@diff [A] %s" % tar.filename)
 
 
 class Manifest(object):

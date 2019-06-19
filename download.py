@@ -7,7 +7,6 @@ from time import time
 from datetime import datetime
 from distutils.util import strtobool
 
-import config
 from config import ArXivConfig as cfg
 from manifest import compare_manifest_xml
 

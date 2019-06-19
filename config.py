@@ -12,6 +12,7 @@ class ArXivConfig(object):
   DOWNLOAD_DIR = os.path.join(DATA_DIR, 'downloads')
   SRC_DIR = os.path.join(DOWNLOAD_DIR, 'src')
   PDF_DIR = os.path.join(DOWNLOAD_DIR, 'pdf')
+  UNTAR_DIR = os.path.join(DATA_DIR, 'untar')
   META_DATA_DIR = os.path.join(DATA_DIR, 'meta-data')
   MAIN_FILE_DIR = os.path.join(DATA_DIR, 'main-files')
   CACHE_DIR = os.path.join(DATA_DIR, 'cache')
