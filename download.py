@@ -13,17 +13,14 @@ from manifest import compare_manifest_xml
 
 class DownloadManager(object):
 
-  def __init__(self):
-    self.config = config.ArXivConfig
-
   def _list_src_objects(self):
-    call(self.config.CMD_LS_SRC, shell=True)
+    call(cfg.CMD_LS_SRC, shell=True)
 
   def _list_pdf_objects(self):
-    call(self.config.CMD_LS_PDF, shell=True)
+    call(cfg.CMD_LS_PDF, shell=True)
 
   def check_data_dir_exists(self):
-    return os.path.exists(self.config.DATA_DIR)
+    return os.path.exists(cfg.DATA_DIR)
 
   def _check_dryrun(self, cmd, dryrun):
     if dryrun:
@@ -47,51 +44,51 @@ class DownloadManager(object):
     else:
       print("You are going to run the following resource-critical command:")
       print(cmd)
-      print("Make sure you have more than 2.6TB of free space in %s." % self.config.DATA_DIR)
+      print("Make sure you have more than 2.6TB of free space in %s." % cfg.DATA_DIR)
       print("This process may take over 24 hours. Make sure your SSH session is persistent.")
       self._yes_or_quit()
     return cmd
 
   def sync_all(self, dryrun=True):
-    cmd = self.config.CMD_SYNC_ALL
+    cmd = cfg.CMD_SYNC_ALL
     cmd = self._check_dryrun_with_prompt(cmd, dryrun)
     call(cmd, shell=True)
 
   def sync_src(self, dryrun=True):
-    cmd = self.config.CMD_SYNC_SRC
+    cmd = cfg.CMD_SYNC_SRC
     cmd = self._check_dryrun_with_prompt(cmd, dryrun)
     call(cmd, shell=True)
 
   def sync_pdf(self, dryrun=True):
-    cmd = self.config.CMD_SYNC_PDF
+    cmd = cfg.CMD_SYNC_PDF
     cmd = self._check_dryrun_with_prompt(cmd, dryrun)
     call(cmd, shell=True)
 
   def check_src_manifest_exists(self):
-    return os.path.exists(self.config.SRC_MANIFEST_PATH)
+    return os.path.exists(cfg.SRC_MANIFEST_PATH)
 
   def check_pdf_manifest_exists(self):
-    return os.path.exists(self.config.PDF_MANIFEST_PATH)
+    return os.path.exists(cfg.PDF_MANIFEST_PATH)
 
   def download_src_manifest(self):
-    call(self.config.CMD_DOWNLOAD_SRC_MANIFEST, shell=True)
+    call(cfg.CMD_DOWNLOAD_SRC_MANIFEST, shell=True)
 
   def download_pdf_manifest(self):
-    call(self.config.CMD_DOWNLOAD_PDF_MANIFEST, shell=True)
+    call(cfg.CMD_DOWNLOAD_PDF_MANIFEST, shell=True)
 
   def _download_src_manifest_cache(self):
-    call(self.config.CMD_DOWNLOAD_SRC_MANIFEST_CACHE, shell=True)
+    call(cfg.CMD_DOWNLOAD_SRC_MANIFEST_CACHE, shell=True)
 
   def _download_pdf_manifest_cache(self):
-    call(self.config.CMD_DOWNLOAD_PDF_MANIFEST_CACHE, shell=True)
+    call(cfg.CMD_DOWNLOAD_PDF_MANIFEST_CACHE, shell=True)
 
   def download_src_object(self, tar, dryrun=True):
-    cmd = self.config.CMD_DOWNLOAD_SRC_OBJECT % tar
+    cmd = cfg.CMD_DOWNLOAD_SRC_OBJECT % tar
     cmd = self._check_dryrun(cmd, dryrun)
     call(cmd, shell=True)
 
   def download_pdf_object(self, tar, dryrun=True):
-    cmd = self.config.CMD_DOWNLOAD_PDF_OBJECT % tar
+    cmd = cfg.CMD_DOWNLOAD_PDF_OBJECT % tar
     cmd = self._check_dryrun(cmd, dryrun)
     call(cmd, shell=True)
 
@@ -108,14 +105,14 @@ class DownloadManager(object):
   def check_remote_src_manifest_identical(self):
     print("Cache remote src manifest...")
     self._download_src_manifest_cache()
-    return self._check_manifest_md5(self.config.SRC_MANIFEST_PATH_CACHE,
-                                    self.config.SRC_MANIFEST_PATH)
+    return self._check_manifest_md5(cfg.SRC_MANIFEST_PATH_CACHE,
+                                    cfg.SRC_MANIFEST_PATH)
 
   def check_remote_pdf_manifest_identical(self):
     print("Cache remote pdf manifest...")
     self._download_pdf_manifest_cache()
-    return self._check_manifest_md5(self.config.PDF_MANIFEST_PATH_CACHE,
-                                    self.config.PDF_MANIFEST_PATH)
+    return self._check_manifest_md5(cfg.PDF_MANIFEST_PATH_CACHE,
+                                    cfg.PDF_MANIFEST_PATH)
 
   def _get_timestamp_suffix(self):
     ts = time()
@@ -123,14 +120,14 @@ class DownloadManager(object):
     return suffix
 
   def rename_old_src_manifest(self):
-    old_name = self.config.SRC_MANIFEST_PATH
-    new_name = self.config.SRC_MANIFEST_PATH + '_' + self._get_timestamp_suffix()
+    old_name = cfg.SRC_MANIFEST_PATH
+    new_name = cfg.SRC_MANIFEST_PATH + '_' + self._get_timestamp_suffix()
     os.rename(old_name, new_name)
     print("rename %s to %s" % (old_name, new_name))
 
   def rename_old_pdf_manifest(self):
-    old_name = self.config.PDF_MANIFEST_PATH
-    new_name = self.config.PDF_MANIFEST_PATH + '_' + self._get_timestamp_suffix()
+    old_name = cfg.PDF_MANIFEST_PATH
+    new_name = cfg.PDF_MANIFEST_PATH + '_' + self._get_timestamp_suffix()
     os.rename(old_name, new_name)
     print("rename %s to %s" % (old_name, new_name))
 
