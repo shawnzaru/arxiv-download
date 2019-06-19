@@ -12,12 +12,10 @@ def compare_manifest_xml(manifest_xml_cache, manifest_xml_local):
   for tar in manifest_cache.tar_list:
     if tar.filename in manifest_local.filename2index:
       local_md5sum = manifest_local.get_md5sum_by_filename(tar.filename)
-      if tar.md5sum == local_md5sum:
-        print("%s is in local manifest. The tar file is identical" % tar.filename)
-      else:
-        print("%s is in local manifest. The tar file has been changed" % tar.filename)
+      if tar.md5sum != local_md5sum:
+        print("[C] %s" % tar.filename)
     else:
-      print("%s is not in local manifest" % tar.filename)
+      print("[A] %s" % tar.filename)
 
 
 class Manifest(object):

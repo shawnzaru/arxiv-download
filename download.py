@@ -8,6 +8,8 @@ from datetime import datetime
 from distutils.util import strtobool
 
 import config
+from config import ArXivConfig as cfg
+from manifest import compare_manifest_xml
 
 class DownloadManager(object):
 
@@ -168,11 +170,13 @@ if __name__ == '__main__':
     print("The src manifest is the newest.")
   else:
     print("The src manifest is out-dated.")
+    compare_manifest_xml(cfg.SRC_MANIFEST_PATH_CACHE, cfg.SRC_MANIFEST_PATH)
     #dm.rename_old_src_manifest()
 
   if dm.check_remote_pdf_manifest_identical():
     print("The pdf manifest is the newest.")
   else:
     print("The pdf manifest is out-dated.")
+    compare_manifest_xml(cfg.PDF_MANIFEST_PATH_CACHE, cfg.PDF_MANIFEST_PATH)
     #dm.rename_old_pdf_manifest()
 
