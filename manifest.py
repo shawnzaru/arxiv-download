@@ -7,12 +7,25 @@ from config import ArXivConfig as cfg
 def compare_manifest_xml(manifest_xml_cache, manifest_xml_local):
   manifest_cache = Manifest(manifest_xml_cache)
   manifest_local = Manifest(manifest_xml_local)
-  pass
+  #print(manifest_cache)
+  #print(manifest_local)
+  for tar in manifest_cache.tar_list:
+    if tar.filename in manifest_local.filename2index:
+      local_md5sum = manifest_local.get_md5sum_by_filename(tar.filename)
+      if tar.md5sum == local_md5sum:
+        print("%s is in local manifest. The tar file is identical" % tar.filename)
+      else:
+        print("%s is in local manifest. The tar file has been changed" % tar.filename)
+    else:
+      print("%s is not in local manifest" % tar.filename)
+
 
 class Manifest(object):
   
   def __init__(self, xmlfile):
     self.tar_list = []
+    self.filename2index = {} # for quick reference
+
     if not os.path.isfile(xmlfile):
       print("file %s does not exist" % xmlfile)
       sys.exit(-1)
@@ -34,8 +47,12 @@ class Manifest(object):
       tar.timestamp = child[8].text
       tar.yymm = child[9].text
       self.tar_list.append(tar)
-      #print(tar)
+      self.filename2index[tar.filename] = len(self.tar_list) - 1
     print("%d pieces of tar file info parsed." % len(self.tar_list))
+
+  def get_md5sum_by_filename(self, filename):
+    # the filename is supposed to exist in the manifest
+    return self.tar_list[self.filename2index[filename]].md5sum
 
   def __repr__(self):
     return "%d tar files from %s to %s." % (len(self.tar_list), self.tar_list[0].filename, self.tar_list[-1].filename)
@@ -57,6 +74,6 @@ class TarFile(object):
 
 
 if __name__ == "__main__":
-  m = Manifest(cfg.SRC_MANIFEST_PATH_CACHE)
-  print(m)
+  #m = Manifest(cfg.SRC_MANIFEST_PATH_CACHE)
+  #print(m)
   compare_manifest_xml(cfg.SRC_MANIFEST_PATH_CACHE, cfg.SRC_MANIFEST_PATH)
