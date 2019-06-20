@@ -40,6 +40,11 @@ aws configure --profile YOUR_PROFILE_NAME
 ```
 and enter your aws credentials. This only needs to be configured once.
 
+### install GNU parallel
+```
+sudo apt install parallel
+```
+
 ### Data Structure
  arxiv_download
   - data (where the downloaded data goes, symlink this to a larger hard disk if necessary)
